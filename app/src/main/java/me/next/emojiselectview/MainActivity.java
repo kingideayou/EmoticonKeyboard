@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         mViewPager = (ViewPager) findViewById(R.id.vp_emoticon);
-        mViewPager.setAdapter(new EmoticonPagerAdapter<>(getApplicationContext(), gridItemList));
+        mViewPager.setAdapter(new EmoticonPagerAdapter<>(getApplicationContext(), gridItemList, R.mipmap.ic_launcher_round));
 
         CircleIndicator indicator = (CircleIndicator) findViewById(R.id.indicator);
         indicator.setViewPager(mViewPager);

@@ -19,6 +19,7 @@ public class EmoticonPageView extends RelativeLayout {
 
     public static final int LINE_COUNT = 3;
     public static final int COLUMN_COUNT = 6;
+    public static final int DEL_BUTTON_NONE = -1;
 
     private GridView mGvEmotion;
 
