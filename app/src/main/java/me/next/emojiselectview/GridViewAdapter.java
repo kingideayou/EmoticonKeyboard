@@ -25,7 +25,10 @@ public class GridViewAdapter extends ArrayAdapter<GridItem> {
     protected int mItemHeight;
     protected int mItemHeightMax;
     protected int mItemHeightMin;
-    protected double mItemHeightMaxRatio = 2;
+    /*
+     * 单个视图高度最高比例：mItemHeight * mItemHeightMaxRatio = mItemHeightMax
+     */
+    protected double mItemHeightMaxRatio = 2.22;
     private Context mContext;
     private int mLayoutResourceId;
     private int mDelResId = EmoticonPageView.DEL_BUTTON_NONE;
