@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -14,12 +15,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.next.emojiselectview.view.EmoticonPageView;
+import me.next.emoticonkeyboard.interfaces.OnEmoticonClickListener;
+import me.next.emoticonkeyboard.interfaces.OnEmoticonLongClickListener;
+import me.next.emoticonkeyboard.model.EmoticonBean;
 
 /**
  * Created by NeXT on 17/11/7.
  */
 
-public class GridViewAdapter extends ArrayAdapter<GridItem> {
+public class GridViewAdapter extends ArrayAdapter<EmoticonBean> {
 
     protected final int mDefalutItemHeight;
     protected int mItemHeight;
@@ -32,10 +36,13 @@ public class GridViewAdapter extends ArrayAdapter<GridItem> {
     private Context mContext;
     private int mLayoutResourceId;
     private int mDelResId = EmoticonPageView.DEL_BUTTON_NONE;
-    private List<GridItem> mGridData = new ArrayList<>();
+    private List<EmoticonBean> mGridData = new ArrayList<>();
+
+    private OnEmoticonClickListener mOnEmoticonClickListener;
+    private OnEmoticonLongClickListener mOnEmoticonLongClickListener;
 
 
-    public GridViewAdapter(Context context, int layoutResId, ArrayList<GridItem> objects) {
+    public GridViewAdapter(Context context, int layoutResId, ArrayList<EmoticonBean> objects) {
         super(context, layoutResId, objects);
         this.mContext = context;
         this.mGridData = objects;
@@ -43,7 +50,7 @@ public class GridViewAdapter extends ArrayAdapter<GridItem> {
         this.mDefalutItemHeight = this.mItemHeight = (int) context.getResources().getDimension(R.dimen.item_emoticon_size_default);
     }
 
-    public GridViewAdapter(Context context, int layoutResId, int delResId, List<GridItem> objects) {
+    public GridViewAdapter(Context context, int layoutResId, int delResId, List<EmoticonBean> objects) {
         super(context, layoutResId, objects);
         this.mContext = context;
         this.mGridData = objects;
@@ -52,19 +59,21 @@ public class GridViewAdapter extends ArrayAdapter<GridItem> {
         this.mDefalutItemHeight = this.mItemHeight = (int) context.getResources().getDimension(R.dimen.item_emoticon_size_default);
     }
 
-    public void setGridData(ArrayList<GridItem> mGridData) {
+    public void setGridData(ArrayList<EmoticonBean> mGridData) {
         this.mGridData = mGridData;
         notifyDataSetChanged();
     }
 
-    public List<GridItem> getData() {
+    public List<EmoticonBean> getData() {
         return mGridData;
     }
 
     @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
+
         ViewHolder holder;
+        final EmoticonBean item = mGridData.get(position);
 
         if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(mContext);
@@ -72,26 +81,56 @@ public class GridViewAdapter extends ArrayAdapter<GridItem> {
 
             holder = new ViewHolder();
             holder.llRoot = (LinearLayout) convertView.findViewById(R.id.ll_root);
-            holder.textView = convertView.findViewById(R.id.tv_data);
+            holder.editText = convertView.findViewById(R.id.tv_data);
             holder.imageView = (ImageView) convertView.findViewById(R.id.iv_emoticon);
 
             convertView.setTag(holder);
+
+            holder.editText.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mOnEmoticonClickListener != null) {
+                        mOnEmoticonClickListener.onEmoticonClick(item, isDelButton(position));
+                    }
+                }
+            });
+
+            convertView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mOnEmoticonClickListener != null) {
+                        mOnEmoticonClickListener.onEmoticonClick(item, isDelButton(position));
+                    }
+                }
+            });
+
+            convertView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    return mOnEmoticonLongClickListener.onEmoticonLongClick(item, isDelButton(position));
+                }
+            });
+
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
         updateUI(holder, parent);
 
-        GridItem item = mGridData.get(position);
+
         if (item == null && !isDelButton(position)) {
             return convertView;
         }
         if (isDelButton(position)) {
             holder.imageView.setImageResource(mDelResId);
+            holder.imageView.setVisibility(View.VISIBLE);
+            holder.editText.setVisibility(View.GONE);
         } else {
-            holder.imageView.setImageResource(R.mipmap.ic_launcher);
-            holder.textView.setText(mGridData.get(position).getTitle());
+            holder.imageView.setVisibility(View.GONE);
+            holder.editText.setVisibility(View.VISIBLE);
+            holder.editText.setText(mGridData.get(position).getEmoticon());
         }
+
         return convertView;
     }
 
@@ -111,6 +150,14 @@ public class GridViewAdapter extends ArrayAdapter<GridItem> {
         viewHolder.llRoot.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, realItemHeight));
     }
 
+    public void setOnEmoticonClickListener(OnEmoticonClickListener onEmoticonClickListener) {
+        mOnEmoticonClickListener = onEmoticonClickListener;
+    }
+
+    public void setOnEmoticonLongClickListener(OnEmoticonLongClickListener onEmoticonLongClickListener) {
+        mOnEmoticonLongClickListener = onEmoticonLongClickListener;
+    }
+
     public void setItemHeightMaxRatio(double mItemHeightMaxRatio) {
         this.mItemHeightMaxRatio = mItemHeightMaxRatio;
     }
@@ -118,6 +165,7 @@ public class GridViewAdapter extends ArrayAdapter<GridItem> {
     private class ViewHolder {
         LinearLayout llRoot;
         TextView textView;
+        EditText editText;
         ImageView imageView;
     }
 }
