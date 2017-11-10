@@ -72,6 +72,7 @@ public class GridViewAdapter extends ArrayAdapter<GridItem> {
 
             holder = new ViewHolder();
             holder.llRoot = (LinearLayout) convertView.findViewById(R.id.ll_root);
+            holder.textView = convertView.findViewById(R.id.tv_data);
             holder.imageView = (ImageView) convertView.findViewById(R.id.iv_emoticon);
 
             convertView.setTag(holder);
@@ -89,6 +90,7 @@ public class GridViewAdapter extends ArrayAdapter<GridItem> {
             holder.imageView.setImageResource(mDelResId);
         } else {
             holder.imageView.setImageResource(R.mipmap.ic_launcher);
+            holder.textView.setText(mGridData.get(position).getTitle());
         }
         return convertView;
     }

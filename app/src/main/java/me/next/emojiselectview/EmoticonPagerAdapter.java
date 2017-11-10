@@ -12,6 +12,8 @@ import java.util.List;
 
 import me.next.emojiselectview.view.EmoticonPageView;
 
+import static me.next.emojiselectview.view.EmoticonPageView.COLUMN_COUNT;
+
 /**
  * Created by NeXT on 17/11/8.
  */
@@ -34,8 +36,8 @@ public class EmoticonPagerAdapter<T> extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return mEmoticonList.size() / (getEmoticonPageSize() - (mDelResId == -1 ? 0 : 1))
-                + (mEmoticonList.size() % (getEmoticonPageSize() - (mDelResId == -1 ? 0 : 1)) > 0 ? 1 : 0);
+        return mEmoticonList.size() / (getEmoticonWithoutDelButtonSize())
+                + (mEmoticonList.size() % (getEmoticonWithoutDelButtonSize()) > 0 ? 1 : 0);
     }
 
     @Override
@@ -53,7 +55,7 @@ public class EmoticonPagerAdapter<T> extends PagerAdapter {
         final List<GridItem> gridItemList = getData(position);
         GridViewAdapter gridViewAdapter = new GridViewAdapter(mContext, R.layout.item_emoticon, mDelResId, gridItemList);
         EmoticonPageView emoticonPageView = new EmoticonPageView(mContext);
-        emoticonPageView.setNumColumns(6);
+        emoticonPageView.setNumColumns(EmoticonPageView.COLUMN_COUNT);
         emoticonPageView.getEmoticonsGridView().setAdapter(gridViewAdapter);
         emoticonPageView.getEmoticonsGridView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -84,9 +86,10 @@ public class EmoticonPagerAdapter<T> extends PagerAdapter {
     }
 
     private ArrayList<GridItem> getData(int position) {
-        int pageEmoticonSize = getEmoticonPageSize();//每页表情数
-        int pageNum = mEmoticonList.size() - pageEmoticonSize * (position + 1);//当前剩余的表情数
-        int size = pageNum > 0 ? pageEmoticonSize - (useDelButton() ? 1 : 0) : Math.abs(pageNum) - (useDelButton() ? 1 : 0);
+
+        int pageTotalSize = getEmoticonPageSize();//每页表情数
+        int leftEmoticonSize = mEmoticonList.size() - getEmoticonWithoutDelButtonSize() * position;//当前剩余的表情数
+        int size = leftEmoticonSize > pageTotalSize ? getEmoticonWithoutDelButtonSize() : leftEmoticonSize % pageTotalSize;
 
         ArrayList<GridItem> list = new ArrayList<>();
         for (int i = 0; i < size; i++) {
@@ -97,15 +100,19 @@ public class EmoticonPagerAdapter<T> extends PagerAdapter {
             return list;
         }
 
-        for (int i = 0; i < pageEmoticonSize - size; i++) {
+        for (int i = 0; i < pageTotalSize - size; i++) {
             list.add(null);
         }
 
         return list;
     }
 
+    private int getEmoticonWithoutDelButtonSize() {
+        return getEmoticonPageSize()  - (useDelButton() ? 1 : 0);
+    }
+
     private int getEmoticonPageSize() {
-        return EmoticonPageView.COLUMN_COUNT * EmoticonPageView.LINE_COUNT;
+        return COLUMN_COUNT * EmoticonPageView.LINE_COUNT;
     }
 
     private boolean useDelButton() {

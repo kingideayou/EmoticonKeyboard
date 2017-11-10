@@ -21,6 +21,11 @@
             android:focusableInTouchMode="false"
             android:gravity="center"/>
 
+        <TextView
+            android:id="@+id/tv_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
     </LinearLayout>
 
 </LinearLayout>

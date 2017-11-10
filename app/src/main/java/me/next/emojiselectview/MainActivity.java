@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
         initEmoticonView();
-
     }
 
     @Override
@@ -37,10 +36,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     private void initEmoticonView() {
         List<GridItem> gridItemList = new ArrayList<>();
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 93; i++) {
             gridItemList.add(new GridItem());
         }
 
@@ -50,6 +48,5 @@ public class MainActivity extends AppCompatActivity {
         CircleIndicator indicator = (CircleIndicator) findViewById(R.id.indicator);
         indicator.setViewPager(mViewPager);
     }
-
 
 }
