@@ -81,7 +81,7 @@ public class GridViewAdapter extends ArrayAdapter<EmoticonBean> {
 
             holder = new ViewHolder();
             holder.llRoot = (LinearLayout) convertView.findViewById(R.id.ll_root);
-            holder.editText = convertView.findViewById(R.id.tv_data);
+            holder.editText = convertView.findViewById(R.id.et_emoji);
             holder.imageView = (ImageView) convertView.findViewById(R.id.iv_emoticon);
 
             convertView.setTag(holder);
@@ -107,7 +107,7 @@ public class GridViewAdapter extends ArrayAdapter<EmoticonBean> {
             convertView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    return mOnEmoticonLongClickListener.onEmoticonLongClick(item, isDelButton(position));
+                    return mOnEmoticonLongClickListener != null && mOnEmoticonLongClickListener.onEmoticonLongClick(item, isDelButton(position));
                 }
             });
 

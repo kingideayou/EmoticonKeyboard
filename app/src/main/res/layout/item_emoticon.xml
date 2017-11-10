@@ -19,7 +19,7 @@
             android:gravity="center"/>
 
         <EditText
-            android:id="@+id/tv_data"
+            android:id="@+id/et_emoji"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
