@@ -29,25 +29,17 @@ public class MainActivity extends AppCompatActivity {
         editText = (EditText) findViewById(R.id.edit_text);
 
         mDetector = EmoticonInputDetector.with(this)
-                .setEmotionView(findViewById(R.id.rl_emoticon))
+                .setEmotionView(findViewById(R.id.rl_emoticon))//表情选择视图
                 .bindToContent(findViewById(R.id.list))
                 .bindToEditText(editText)
-                .bindToEmotionButton(findViewById(R.id.emotion_button))
+                .bindToEmotionButton(findViewById(R.id.emotion_button))//控制表情显示按钮
                 .build();
 
         initEmoticonView();
     }
 
-    @Override
-    public void onBackPressed() {
-        if (!mDetector.interceptBackPress()) {
-            super.onBackPressed();
-        }
-    }
-
     private void initEmoticonView() {
         List<EmoticonBean> gridItemList = Arrays.asList(EmojiPeople.DATA);
-
         ViewPager mViewPager = (ViewPager) findViewById(R.id.vp_emoticon);
         EmoticonPagerAdapter emoticonPagerAdapter = new EmoticonPagerAdapter(
                 getApplicationContext(),
@@ -57,31 +49,52 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onEmoticonClick(EmoticonBean emoticonBean, boolean isDel) {
                 if (isDel) {
-                    int length = editText.getText().length();
-                    if (length <= 0) {
-                        return;
-                    }
-                    editText.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL));
+                    clickDelButton();
                     return;
                 }
-
-                int start = editText.getSelectionStart();
-                int end = editText.getSelectionEnd();
-
-                if (start < 0) {
-                    editText.append(emoticonBean.getEmoticon());
-                } else {
-                    editText.getText().replace(
-                            Math.min(start, end),
-                            Math.max(start, end),
-                            emoticonBean.getEmoticon(), 0, emoticonBean.getEmoticon().length());
-                }
+                inputEmoticon(emoticonBean);
             }
         });
         mViewPager.setAdapter(emoticonPagerAdapter);
 
         CircleIndicator indicator = (CircleIndicator) findViewById(R.id.indicator);
         indicator.setViewPager(mViewPager);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!mDetector.interceptBackPress()) {
+            super.onBackPressed();
+        }
+    }
+
+    /**
+     * 插入表情
+     * @param emoticonBean
+     */
+    private void inputEmoticon(EmoticonBean emoticonBean) {
+        int start = editText.getSelectionStart();
+        int end = editText.getSelectionEnd();
+
+        if (start < 0) {
+            editText.append(emoticonBean.getEmoticon());
+        } else {
+            editText.getText().replace(
+                    Math.min(start, end),
+                    Math.max(start, end),
+                    emoticonBean.getEmoticon(), 0, emoticonBean.getEmoticon().length());
+        }
+    }
+
+    /**
+     * 响应删除事件
+     */
+    private void clickDelButton() {
+        int length = editText.getText().length();
+        if (length <= 0) {
+            return;
+        }
+        editText.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL));
     }
 
 }
