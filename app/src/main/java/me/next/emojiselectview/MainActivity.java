@@ -4,10 +4,10 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
-import android.widget.EditText;
 
 import java.util.List;
 
+import me.next.emojiselectview.view.EmoticonsEditText;
 import me.next.emoticonkeyboard.interfaces.OnEmoticonClickListener;
 import me.next.emoticonkeyboard.model.EmoticonBean;
 import me.relex.circleindicator.CircleIndicator;
@@ -15,14 +15,14 @@ import me.relex.circleindicator.CircleIndicator;
 public class MainActivity extends AppCompatActivity {
 
     private EmoticonInputDetector mDetector;
-    EditText editText;
+    EmoticonsEditText editText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        editText = (EditText) findViewById(R.id.edit_text);
+        editText = (EmoticonsEditText) findViewById(R.id.edit_text);
 
         mDetector = EmoticonInputDetector.with(this)
                 .setEmotionView(findViewById(R.id.rl_emoticon))
@@ -56,6 +56,10 @@ public class MainActivity extends AppCompatActivity {
                         return;
                     }
                     editText.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL));
+                    return;
+                }
+
+                if (emoticonBean == null) {
                     return;
                 }
 

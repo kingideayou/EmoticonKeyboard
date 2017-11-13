@@ -2,6 +2,7 @@ package me.next.emojiselectview;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -70,7 +71,7 @@ public class EmoticonPagerAdapter extends PagerAdapter {
 
         int pageTotalSize = getEmoticonPageSize();//每页表情数
         int leftEmoticonSize = emoticonBeanList.size() - getEmoticonWithoutDelButtonSize() * position;//当前剩余的表情数
-        int pageSize = leftEmoticonSize > pageTotalSize
+        int pageSize = leftEmoticonSize >= pageTotalSize
                 ? getEmoticonWithoutDelButtonSize() : leftEmoticonSize % pageTotalSize;
         List<EmoticonBean> list = new ArrayList<>(
                 emoticonBeanList.subList(

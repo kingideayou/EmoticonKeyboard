@@ -88,7 +88,7 @@ public class EmoticonSet {
                 Integer.valueOf(R.drawable.tieba_emotion_69),
                 Integer.valueOf(R.drawable.tieba_emotion_70)};
 
-        String[] stringArray = context.getResources().getStringArray(R.array.tieba_emotion_array);
+        String[] stringArray = context.getResources().getStringArray(R.array.tieba_emotion_array_1);
 
         if (numArr.length == stringArray.length) {
             for (int i = 0; i < numArr.length; i++) {
