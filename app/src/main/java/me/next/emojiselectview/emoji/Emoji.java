@@ -1,4 +1,4 @@
-package me.next.emojiselectview.emoticon;
+package me.next.emojiselectview.emoji;
 
 import me.next.emoticonkeyboard.model.EmoticonBean;
 

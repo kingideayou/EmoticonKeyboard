@@ -1,4 +1,4 @@
-package me.next.emojiselectview.view;
+package me.next.emoticonkeyboard.view;
 
 /**
  * Created by NeXT on 17/11/7.
@@ -13,7 +13,8 @@ import android.view.View;
 import android.widget.GridView;
 import android.widget.RelativeLayout;
 
-import me.next.emojiselectview.R;
+import me.next.emoticonkeyboard.R;
+
 
 public class EmoticonPageView extends RelativeLayout {
 
@@ -34,13 +35,21 @@ public class EmoticonPageView extends RelativeLayout {
     public EmoticonPageView(Context context, AttributeSet attrs) {
         super(context, attrs);
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.item_emoticonpage, this);
-        mGvEmotion = view.findViewById(R.id.gv_emotion);
+        View view = inflater.inflate(getLayoutId(), this);
+        mGvEmotion = view.findViewById(getGridViewId());
         mGvEmotion.setMotionEventSplittingEnabled(false);
         mGvEmotion.setStretchMode(GridView.STRETCH_COLUMN_WIDTH);
         mGvEmotion.setCacheColorHint(0);
         mGvEmotion.setSelector(new ColorDrawable(Color.TRANSPARENT));
         mGvEmotion.setVerticalScrollBarEnabled(false);
+    }
+
+    public int getLayoutId() {
+        return R.layout.item_emoticonpage;
+    }
+
+    public int getGridViewId() {
+        return R.id.gv_emotion;
     }
 
     public void setNumColumns(int row) {

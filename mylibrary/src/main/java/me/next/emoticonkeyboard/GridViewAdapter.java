@@ -1,4 +1,4 @@
-package me.next.emojiselectview;
+package me.next.emoticonkeyboard;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -14,10 +14,10 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.next.emojiselectview.view.EmoticonPageView;
 import me.next.emoticonkeyboard.interfaces.OnEmoticonClickListener;
 import me.next.emoticonkeyboard.interfaces.OnEmoticonLongClickListener;
 import me.next.emoticonkeyboard.model.EmoticonBean;
+import me.next.emoticonkeyboard.view.EmoticonPageView;
 
 /**
  * Created by NeXT on 17/11/7.

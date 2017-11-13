@@ -9,7 +9,9 @@ import android.widget.EditText;
 import java.util.Arrays;
 import java.util.List;
 
-import me.next.emojiselectview.emoticon.EmojiPeople;
+import me.next.emojiselectview.emoji.EmojiPeople;
+import me.next.emoticonkeyboard.EmoticonInputDetector;
+import me.next.emoticonkeyboard.EmoticonPagerAdapter;
 import me.next.emoticonkeyboard.interfaces.OnEmoticonClickListener;
 import me.next.emoticonkeyboard.model.EmoticonBean;
 import me.relex.circleindicator.CircleIndicator;
@@ -47,7 +49,10 @@ public class MainActivity extends AppCompatActivity {
         List<EmoticonBean> gridItemList = Arrays.asList(EmojiPeople.DATA);
 
         ViewPager mViewPager = (ViewPager) findViewById(R.id.vp_emoticon);
-        EmoticonPagerAdapter emoticonPagerAdapter = new EmoticonPagerAdapter(getApplicationContext(), gridItemList, R.mipmap.ic_launcher_round);
+        EmoticonPagerAdapter emoticonPagerAdapter = new EmoticonPagerAdapter(
+                getApplicationContext(),
+                gridItemList,
+                R.mipmap.ic_launcher_round);
         emoticonPagerAdapter.setOnEmoticonClickListener(new OnEmoticonClickListener() {
             @Override
             public void onEmoticonClick(EmoticonBean emoticonBean, boolean isDel) {
