@@ -126,9 +126,16 @@ public class GridViewAdapter extends ArrayAdapter<EmoticonBean> {
             holder.imageView.setVisibility(View.VISIBLE);
             holder.editText.setVisibility(View.GONE);
         } else {
-            holder.imageView.setVisibility(View.GONE);
-            holder.editText.setVisibility(View.VISIBLE);
-            holder.editText.setText(mGridData.get(position).getEmoticon());
+
+            if (item != null) {
+                holder.imageView.setVisibility(View.VISIBLE);
+                holder.editText.setVisibility(View.GONE);
+                holder.imageView.setImageResource(item.getIcon());
+            } else {
+                holder.imageView.setVisibility(View.GONE);
+                holder.editText.setVisibility(View.VISIBLE);
+                holder.editText.setText(mGridData.get(position).getEmoticon());
+            }
         }
 
         return convertView;

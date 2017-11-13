@@ -6,10 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.widget.EditText;
 
-import java.util.Arrays;
 import java.util.List;
 
-import me.next.emojiselectview.emoticon.EmojiPeople;
 import me.next.emoticonkeyboard.interfaces.OnEmoticonClickListener;
 import me.next.emoticonkeyboard.model.EmoticonBean;
 import me.relex.circleindicator.CircleIndicator;
@@ -44,7 +42,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initEmoticonView() {
-        List<EmoticonBean> gridItemList = Arrays.asList(EmojiPeople.DATA);
+//        List<EmoticonBean> gridItemList = Arrays.asList(EmojiPeople.DATA);
+        List<EmoticonBean> gridItemList = EmoticonSet.getTiebaEmoticon(getApplicationContext());
 
         ViewPager mViewPager = (ViewPager) findViewById(R.id.vp_emoticon);
         EmoticonPagerAdapter emoticonPagerAdapter = new EmoticonPagerAdapter(getApplicationContext(), gridItemList, R.mipmap.ic_launcher_round);
