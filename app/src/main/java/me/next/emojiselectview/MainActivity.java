@@ -5,8 +5,11 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import me.next.emojiselectview.emoji.EmojiPeople;
 import me.next.emojiselectview.view.EmoticonsEditText;
 import me.next.emoticonkeyboard.EmoticonInputDetector;
 import me.next.emoticonkeyboard.EmoticonPagerAdapter;
@@ -19,10 +22,18 @@ public class MainActivity extends AppCompatActivity {
     private EmoticonInputDetector mDetector;
     EmoticonsEditText editText;
 
+    List<List<EmoticonBean>> mEmotionList = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        List<EmoticonBean> gridItemList1 = Arrays.asList(EmojiPeople.DATA);
+        List<EmoticonBean> gridItemList2 = EmoticonSet.getTiebaEmoticon(getApplicationContext());
+
+        mEmotionList.add(gridItemList1);
+        mEmotionList.add(gridItemList2);
 
         editText = (EmoticonsEditText) findViewById(R.id.edit_text);
 
@@ -30,20 +41,19 @@ public class MainActivity extends AppCompatActivity {
                 .setEmotionView(findViewById(R.id.rl_emoticon))//表情选择视图
                 .bindToContent(findViewById(R.id.list))
                 .bindToEditText(editText)
+                .bindToTableLayout(findViewById(R.id.tabs), mEmotionList)
                 .bindToEmotionButton(findViewById(R.id.emotion_button))//控制表情显示按钮
                 .build();
 
-        initEmoticonView();
+        initEmoticonView(mEmotionList);
     }
 
-    private void initEmoticonView() {
-//        List<EmoticonBean> gridItemList = Arrays.asList(EmojiPeople.DATA);
-        List<EmoticonBean> gridItemList = EmoticonSet.getTiebaEmoticon(getApplicationContext());
+    private void initEmoticonView(List<List<EmoticonBean>> emoticonBeanList) {
         ViewPager mViewPager = (ViewPager) findViewById(R.id.vp_emoticon);
         EmoticonPagerAdapter emoticonPagerAdapter = new EmoticonPagerAdapter(
                 getApplicationContext(),
-                gridItemList,
-                R.mipmap.ic_launcher_round);
+                R.mipmap.ic_launcher_round,
+                emoticonBeanList);
 
         emoticonPagerAdapter.setOnEmoticonClickListener(new OnEmoticonClickListener() {
             @Override
