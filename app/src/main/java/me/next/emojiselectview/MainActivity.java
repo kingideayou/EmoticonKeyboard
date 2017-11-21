@@ -5,6 +5,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 
+import com.astuetz.PagerSlidingTabStrip;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -48,9 +50,9 @@ public class MainActivity extends AppCompatActivity {
         initEmoticonView(mEmotionList);
     }
 
-    private void initEmoticonView(List<List<EmoticonBean>> emoticonBeanList) {
-        ViewPager mViewPager = (ViewPager) findViewById(R.id.vp_emoticon);
-        EmoticonPagerAdapter emoticonPagerAdapter = new EmoticonPagerAdapter(
+    private void initEmoticonView(final List<List<EmoticonBean>> emoticonBeanList) {
+        final ViewPager mViewPager = (ViewPager) findViewById(R.id.vp_emoticon);
+        final EmoticonPagerAdapter emoticonPagerAdapter = new EmoticonPagerAdapter(
                 getApplicationContext(),
                 R.mipmap.ic_launcher_round,
                 emoticonBeanList);
@@ -72,6 +74,15 @@ public class MainActivity extends AppCompatActivity {
 
         CircleIndicator indicator = (CircleIndicator) findViewById(R.id.indicator);
         indicator.setViewPager(mViewPager);
+
+        PagerSlidingTabStrip pagerSlidingTabStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
+        pagerSlidingTabStrip.setViewPager(mViewPager);
+        pagerSlidingTabStrip.setOnTabClickListener(new PagerSlidingTabStrip.OnTabClickListener() {
+            @Override
+            public void onTabClick(int position) {
+                mViewPager.setCurrentItem(emoticonPagerAdapter.getEmoticonGroupList().get(position).getPageStart());
+            }
+        });
     }
 
     @Override

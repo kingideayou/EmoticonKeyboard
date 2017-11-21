@@ -142,6 +142,10 @@ public class EmoticonPagerAdapter extends PagerAdapter {
         mOnEmoticonLongClickListener = onEmoticonLongClickListener;
     }
 
+    public List<EmoticonListBean> getEmoticonGroupList() {
+        return mEmoticonGroupList;
+    }
+
     private int getEmoticonWithoutDelButtonSize() {
         return getEmoticonPageSize()  - (useDelButton() ? 1 : 0);
     }
