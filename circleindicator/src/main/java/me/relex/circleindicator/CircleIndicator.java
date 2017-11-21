@@ -11,10 +11,14 @@ import android.support.annotation.AnimatorRes;
 import android.support.annotation.DrawableRes;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.animation.Interpolator;
 import android.widget.LinearLayout;
+
+import me.next.emoticonkeyboard.EmoticonPagerAdapter;
+import me.next.emoticonkeyboard.model.EmoticonListBean;
 
 import static android.support.v4.view.ViewPager.OnPageChangeListener;
 
@@ -33,6 +37,7 @@ public class CircleIndicator extends LinearLayout {
     private Animator mAnimatorIn;
     private Animator mImmediateAnimatorOut;
     private Animator mImmediateAnimatorIn;
+    private EmoticonListBean mEmoticonListBean;
 
     private int mLastPosition = -1;
 
@@ -182,6 +187,19 @@ public class CircleIndicator extends LinearLayout {
                 return;
             }
 
+            if (mViewpager.getAdapter() instanceof EmoticonPagerAdapter) {
+                position = position - mEmoticonListBean.getPageStart();
+                if (mViewpager.getCurrentItem() >= mEmoticonListBean.getPageEnd()) {
+                    createIndicators();
+                    mLastPosition = 0;
+                    return;
+                } else if (mViewpager.getCurrentItem() < mEmoticonListBean.getPageStart()) {
+                    createIndicators();
+                    mLastPosition = mEmoticonListBean.getPageEnd() - 1;
+                    return;
+                }
+            }
+
             if (mAnimatorIn.isRunning()) {
                 mAnimatorIn.end();
                 mAnimatorIn.cancel();
@@ -250,12 +268,40 @@ public class CircleIndicator extends LinearLayout {
     }
 
     private void createIndicators() {
+        if (mViewpager.getAdapter() instanceof EmoticonPagerAdapter) {
+            createIndicatorsForEmoticon();
+            return;
+        }
         removeAllViews();
         int count = mViewpager.getAdapter().getCount();
         if (count <= 0) {
             return;
         }
         int currentItem = mViewpager.getCurrentItem();
+        int orientation = getOrientation();
+
+        for (int i = 0; i < count; i++) {
+            if (currentItem == i) {
+                addIndicator(orientation, mIndicatorBackgroundResId, mImmediateAnimatorOut);
+            } else {
+                addIndicator(orientation, mIndicatorUnselectedBackgroundResId,
+                        mImmediateAnimatorIn);
+            }
+        }
+    }
+
+    private void createIndicatorsForEmoticon() {
+        removeAllViews();
+        EmoticonPagerAdapter adapter = (EmoticonPagerAdapter) mViewpager.getAdapter();
+        mEmoticonListBean = adapter.getEmoticonListBean(mViewpager.getCurrentItem());
+        if (mEmoticonListBean == null) {
+            return;
+        }
+        int count = mEmoticonListBean.getPageEnd() - mEmoticonListBean.getPageStart();
+        if (count <= 0) {
+            return;
+        }
+        int currentItem = mViewpager.getCurrentItem() - mEmoticonListBean.getPageStart();
         int orientation = getOrientation();
 
         for (int i = 0; i < count; i++) {

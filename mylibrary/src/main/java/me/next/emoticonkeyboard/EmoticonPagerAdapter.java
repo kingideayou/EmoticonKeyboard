@@ -92,14 +92,14 @@ public class EmoticonPagerAdapter extends PagerAdapter {
         for (EmoticonListBean emoticonListBean : emoticonListBeanList) {
             if (emoticonListBean.getPageEnd() > position) {
                 currentEmotionListBean = emoticonListBean;
-                emoticonBeanList = emoticonListBean.getEmoticonBeanList();
                 break;
             }
         }
 
-        if (currentEmotionListBean == null || emoticonBeanList.size() == 0) {
+        if (currentEmotionListBean == null) {
             return emoticonBeanList;
         }
+        emoticonBeanList = currentEmotionListBean.getEmoticonBeanList();
 
         position = position - currentEmotionListBean.getPageStart();
 
@@ -121,6 +121,17 @@ public class EmoticonPagerAdapter extends PagerAdapter {
         }
 
         return list;
+    }
+
+    public EmoticonListBean getEmoticonListBean(int position) {
+        EmoticonListBean currentEmotionListBean = null;
+        for (EmoticonListBean emoticonListBean : mEmoticonGroupList) {
+            if (emoticonListBean.getPageEnd() > position) {
+                currentEmotionListBean = emoticonListBean;
+                break;
+            }
+        }
+        return currentEmotionListBean;
     }
 
     public void setOnEmoticonClickListener(OnEmoticonClickListener onEmoticonClickListener) {
