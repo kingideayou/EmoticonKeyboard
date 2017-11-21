@@ -1,4 +1,4 @@
-package me.next.emojiselectview;
+package me.next.emoticonkeyboard;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
@@ -9,12 +9,12 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.next.emojiselectview.view.EmoticonPageView;
 import me.next.emoticonkeyboard.interfaces.OnEmoticonClickListener;
 import me.next.emoticonkeyboard.interfaces.OnEmoticonLongClickListener;
 import me.next.emoticonkeyboard.model.EmoticonBean;
+import me.next.emoticonkeyboard.view.EmoticonPageView;
 
-import static me.next.emojiselectview.view.EmoticonPageView.COLUMN_COUNT;
+import static me.next.emoticonkeyboard.view.EmoticonPageView.COLUMN_COUNT;
 
 /**
  * Created by NeXT on 17/11/8.

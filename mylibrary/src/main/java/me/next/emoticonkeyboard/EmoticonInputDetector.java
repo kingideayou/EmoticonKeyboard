@@ -1,4 +1,4 @@
-package me.next.emojiselectview;
+package me.next.emoticonkeyboard;
 
 import android.annotation.TargetApi;
 import android.app.Activity;

@@ -5,9 +5,10 @@
               android:orientation="vertical"
               tools:context=".MainActivity">
 
-    <!-- 删除 ListView 之后，键盘会显示在 EditText 的 cursor 下 -->
-    <ListView
+    <!-- ListView or RelativeLayout -->
+    <RelativeLayout
         android:id="@+id/list"
+        android:background="#eee"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"/>
