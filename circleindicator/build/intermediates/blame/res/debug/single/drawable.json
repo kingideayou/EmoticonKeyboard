@@ -16,6 +16,10 @@
         "source": "/Users/NeXT/.android/build-cache/e614a278a4118c393b68a1f72cb7a467df17cbe2/output/res/drawable/abc_item_background_holo_light.xml"
     },
     {
+        "merged": "/Users/NeXT/Projects/GitDemo/XhsEmoticonsKeyboard/EmojiSelectView/circleindicator/build/intermediates/res/merged/debug/drawable/background_tab.xml",
+        "source": "/Users/NeXT/Projects/GitDemo/XhsEmoticonsKeyboard/EmojiSelectView/mylibrary/build/intermediates/bundles/default/res/drawable/background_tab.xml"
+    },
+    {
         "merged": "/Users/NeXT/Projects/GitDemo/XhsEmoticonsKeyboard/EmojiSelectView/circleindicator/build/intermediates/res/merged/debug/drawable/abc_list_selector_background_transition_holo_dark.xml",
         "source": "/Users/NeXT/.android/build-cache/e614a278a4118c393b68a1f72cb7a467df17cbe2/output/res/drawable/abc_list_selector_background_transition_holo_dark.xml"
     },

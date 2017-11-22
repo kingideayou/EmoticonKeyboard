@@ -13,40 +13,40 @@ import me.next.emoticonkeyboard.interfaces.OnEmoticonLongClickListener;
 import me.next.emoticonkeyboard.model.EmoticonBean;
 import me.next.emoticonkeyboard.model.EmoticonListBean;
 import me.next.emoticonkeyboard.view.EmoticonPageView;
+import me.next.emoticonkeyboard.view.pagerslidingtabstrip.PagerSlidingTabStrip;
 
 import static me.next.emoticonkeyboard.view.EmoticonPageView.COLUMN_COUNT;
 
 /**
  * Created by NeXT on 17/11/8.
  */
-public class EmoticonPagerAdapter extends PagerAdapter {
+public class EmoticonPagerAdapter extends PagerAdapter implements PagerSlidingTabStrip.IconTabProvider {
 
     private int mDelResId = EmoticonPageView.DEL_BUTTON_NONE;
 
     private Context mContext;
-    private List<EmoticonBean> mEmoticonList = new ArrayList<>();
     private List<EmoticonListBean> mEmoticonGroupList = new ArrayList<>();
+    private int[] mTabRes;
     private OnEmoticonClickListener mOnEmoticonClickListener;
     private OnEmoticonLongClickListener mOnEmoticonLongClickListener;
 
-    public EmoticonPagerAdapter(Context context, List<EmoticonBean> emoticonList) {
+    public EmoticonPagerAdapter(Context context, List<EmoticonBean> emoticonList, int[] tabRes) {
+        this.mTabRes = tabRes;
         this.mContext = context;
-        this.mEmoticonList = emoticonList;
         this.mEmoticonGroupList.add(new EmoticonListBean(emoticonList));
     }
 
-    public EmoticonPagerAdapter(Context context, List<EmoticonBean> emoticonList, int delResId) {
+    public EmoticonPagerAdapter(Context context, List<EmoticonBean> emoticonList, int delResId, int[] tabRes) {
         this.mContext = context;
         this.mDelResId = delResId;
-        this.mEmoticonList = emoticonList;
         this.mEmoticonGroupList.add(new EmoticonListBean(emoticonList));
     }
 
-    public EmoticonPagerAdapter(Context context, int delResId, List<List<EmoticonBean>> emoticonList) {
+    public EmoticonPagerAdapter(Context context, int delResId, List<List<EmoticonBean>> emoticonList, int[] tabRes) {
+        this.mTabRes = tabRes;
         this.mContext = context;
         this.mDelResId = delResId;
         for (List<EmoticonBean> emoticonBeen : emoticonList) {
-            this.mEmoticonList.addAll(emoticonBeen);
             this.mEmoticonGroupList.add(new EmoticonListBean(emoticonBeen));
         }
     }
@@ -158,4 +158,11 @@ public class EmoticonPagerAdapter extends PagerAdapter {
         return mDelResId != EmoticonPageView.DEL_BUTTON_NONE;
     }
 
+    @Override
+    public int getPageIconResId(int position) {
+        if (mTabRes == null || mTabRes.length < mEmoticonGroupList.size()) {
+            return 0;
+        }
+        return mTabRes[position];
+    }
 }

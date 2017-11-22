@@ -2,6 +2,7 @@
 <RelativeLayout
     android:id="@+id/rl_emoticon"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="0dp"
@@ -24,11 +25,16 @@
         android:layout_height="22dp"
         android:layout_above="@+id/tabs"/>
 
-    <com.astuetz.PagerSlidingTabStrip
+    <me.next.emoticonkeyboard.view.pagerslidingtabstrip.PagerSlidingTabStrip
         android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_alignParentBottom="true"
-        android:gravity="center"/>
+        android:background="#eeeeee"
+        android:gravity="center"
+        app:pstsDividerPadding="0dp"
+        app:pstsIndicatorColor="#bbbbbb"
+        app:pstsIndicatorHeight="40dp"
+        app:pstsTabPaddingLeftRight="3dp"/>
 
 </RelativeLayout>

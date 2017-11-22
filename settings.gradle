@@ -1,1 +1,1 @@
-include ':app', ':mylibrary', ':circleindicator', ':pagerslidingtabstrip'
+include ':app', ':mylibrary', ':circleindicator'//, ':pagerslidingtabstrip'

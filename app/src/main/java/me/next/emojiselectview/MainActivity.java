@@ -5,8 +5,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 
-import com.astuetz.PagerSlidingTabStrip;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -17,6 +15,7 @@ import me.next.emoticonkeyboard.EmoticonInputDetector;
 import me.next.emoticonkeyboard.EmoticonPagerAdapter;
 import me.next.emoticonkeyboard.interfaces.OnEmoticonClickListener;
 import me.next.emoticonkeyboard.model.EmoticonBean;
+import me.next.emoticonkeyboard.view.pagerslidingtabstrip.PagerSlidingTabStrip;
 import me.relex.circleindicator.CircleIndicator;
 
 public class MainActivity extends AppCompatActivity {
@@ -55,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         final EmoticonPagerAdapter emoticonPagerAdapter = new EmoticonPagerAdapter(
                 getApplicationContext(),
                 R.mipmap.ic_launcher_round,
-                emoticonBeanList);
+                emoticonBeanList, new int[]{R.mipmap.ic_launcher, R.mipmap.ic_launcher_round});
 
         emoticonPagerAdapter.setOnEmoticonClickListener(new OnEmoticonClickListener() {
             @Override
