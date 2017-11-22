@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -81,19 +80,10 @@ public class GridViewAdapter extends ArrayAdapter<EmoticonBean> {
 
             holder = new ViewHolder();
             holder.llRoot = (LinearLayout) convertView.findViewById(R.id.ll_root);
-            holder.editText = convertView.findViewById(R.id.et_emoji);
+            holder.mTextView = (TextView)convertView.findViewById(R.id.et_emoji);
             holder.imageView = (ImageView) convertView.findViewById(R.id.iv_emoticon);
 
             convertView.setTag(holder);
-
-            holder.editText.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mOnEmoticonClickListener != null) {
-                        mOnEmoticonClickListener.onEmoticonClick(item, isDelButton(position));
-                    }
-                }
-            });
 
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -124,7 +114,7 @@ public class GridViewAdapter extends ArrayAdapter<EmoticonBean> {
         if (isDelButton(position)) {
             holder.imageView.setImageResource(mDelResId);
             holder.imageView.setVisibility(View.VISIBLE);
-            holder.editText.setVisibility(View.GONE);
+            holder.mTextView.setVisibility(View.GONE);
         } else {
 
             if (item != null) {
@@ -143,18 +133,18 @@ public class GridViewAdapter extends ArrayAdapter<EmoticonBean> {
 
     private void hideItem(ViewHolder holder) {
         holder.imageView.setVisibility(View.GONE);
-        holder.editText.setVisibility(View.GONE);
+        holder.mTextView.setVisibility(View.GONE);
     }
 
     private void showEmoji(int position, ViewHolder holder) {
         holder.imageView.setVisibility(View.GONE);
-        holder.editText.setVisibility(View.VISIBLE);
-        holder.editText.setText(mGridData.get(position).getEmoticon());
+        holder.mTextView.setVisibility(View.VISIBLE);
+        holder.mTextView.setText(mGridData.get(position).getEmoticon());
     }
 
     private void showEmoticon(ViewHolder holder, EmoticonBean item) {
         holder.imageView.setVisibility(View.VISIBLE);
-        holder.editText.setVisibility(View.GONE);
+        holder.mTextView.setVisibility(View.GONE);
         holder.imageView.setImageResource(item.getIcon());
     }
 
@@ -188,8 +178,7 @@ public class GridViewAdapter extends ArrayAdapter<EmoticonBean> {
 
     private class ViewHolder {
         LinearLayout llRoot;
-        TextView textView;
-        EditText editText;
+        TextView mTextView;
         ImageView imageView;
     }
 }
