@@ -33,7 +33,7 @@
         android:background="#eeeeee"
         android:gravity="center"
         app:pstsDividerPadding="0dp"
-        app:pstsIndicatorColor="#bbbbbb"
+        app:pstsIndicatorColor="#aaaaaa"
         app:pstsIndicatorHeight="40dp"
         app:pstsTabPaddingLeftRight="3dp"/>
 
