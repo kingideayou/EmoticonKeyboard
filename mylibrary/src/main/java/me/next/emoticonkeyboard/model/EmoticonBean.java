@@ -2,6 +2,7 @@ package me.next.emoticonkeyboard.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.DrawableRes;
 
 /**
  * Created by NeXT on 17/11/10.
@@ -9,14 +10,14 @@ import android.os.Parcelable;
 
 public class EmoticonBean implements Parcelable {
 
-    private int icon;
+    private @DrawableRes int icon;
     private char value;
     private String emoticon;
 
     public EmoticonBean() {
     }
 
-    public EmoticonBean(int icon, char value, String emoticon) {
+    public EmoticonBean(@DrawableRes int icon, char value, String emoticon) {
         this.icon = icon;
         this.value = value;
         this.emoticon = emoticon;

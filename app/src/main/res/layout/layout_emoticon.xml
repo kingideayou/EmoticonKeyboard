@@ -3,10 +3,10 @@
     android:id="@+id/rl_emoticon"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="#dedede"
     android:layout_width="match_parent"
     android:layout_height="0dp"
     android:layout_alignParentBottom="true"
+    android:background="#dedede"
     android:orientation="vertical"
     android:visibility="gone"
     tools:layout_height="200dp"
@@ -22,7 +22,13 @@
         android:id="@+id/indicator"
         android:layout_width="match_parent"
         android:layout_height="22dp"
+        android:layout_above="@+id/tabs"/>
+
+    <com.astuetz.PagerSlidingTabStrip
+        android:id="@+id/tabs"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="16dp"/>
+        android:gravity="center"/>
 
 </RelativeLayout>

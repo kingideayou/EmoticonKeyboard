@@ -4,12 +4,15 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
-import android.widget.EditText;
 
+import com.astuetz.PagerSlidingTabStrip;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import me.next.emojiselectview.emoji.EmojiPeople;
+import me.next.emojiselectview.view.EmoticonsEditText;
 import me.next.emoticonkeyboard.EmoticonInputDetector;
 import me.next.emoticonkeyboard.EmoticonPagerAdapter;
 import me.next.emoticonkeyboard.interfaces.OnEmoticonClickListener;
@@ -19,37 +22,49 @@ import me.relex.circleindicator.CircleIndicator;
 public class MainActivity extends AppCompatActivity {
 
     private EmoticonInputDetector mDetector;
-    EditText editText;
+    EmoticonsEditText editText;
+
+    List<List<EmoticonBean>> mEmotionList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        editText = (EditText) findViewById(R.id.edit_text);
+        List<EmoticonBean> gridItemList1 = Arrays.asList(EmojiPeople.DATA);
+        List<EmoticonBean> gridItemList2 = EmoticonSet.getTiebaEmoticon(getApplicationContext());
+
+        mEmotionList.add(gridItemList1);
+        mEmotionList.add(gridItemList2);
+
+        editText = (EmoticonsEditText) findViewById(R.id.edit_text);
 
         mDetector = EmoticonInputDetector.with(this)
                 .setEmotionView(findViewById(R.id.rl_emoticon))//表情选择视图
                 .bindToContent(findViewById(R.id.list))
                 .bindToEditText(editText)
+                .bindToTableLayout(findViewById(R.id.tabs), mEmotionList)
                 .bindToEmotionButton(findViewById(R.id.emotion_button))//控制表情显示按钮
                 .build();
 
-        initEmoticonView();
+        initEmoticonView(mEmotionList);
     }
 
-    private void initEmoticonView() {
-        List<EmoticonBean> gridItemList = Arrays.asList(EmojiPeople.DATA);
-        ViewPager mViewPager = (ViewPager) findViewById(R.id.vp_emoticon);
-        EmoticonPagerAdapter emoticonPagerAdapter = new EmoticonPagerAdapter(
+    private void initEmoticonView(final List<List<EmoticonBean>> emoticonBeanList) {
+        final ViewPager mViewPager = (ViewPager) findViewById(R.id.vp_emoticon);
+        final EmoticonPagerAdapter emoticonPagerAdapter = new EmoticonPagerAdapter(
                 getApplicationContext(),
-                gridItemList,
-                R.mipmap.ic_launcher_round);
+                R.mipmap.ic_launcher_round,
+                emoticonBeanList);
+
         emoticonPagerAdapter.setOnEmoticonClickListener(new OnEmoticonClickListener() {
             @Override
             public void onEmoticonClick(EmoticonBean emoticonBean, boolean isDel) {
                 if (isDel) {
                     clickDelButton();
+                    return;
+                }
+                if (emoticonBean == null) {
                     return;
                 }
                 inputEmoticon(emoticonBean);
@@ -59,6 +74,15 @@ public class MainActivity extends AppCompatActivity {
 
         CircleIndicator indicator = (CircleIndicator) findViewById(R.id.indicator);
         indicator.setViewPager(mViewPager);
+
+        PagerSlidingTabStrip pagerSlidingTabStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
+        pagerSlidingTabStrip.setViewPager(mViewPager);
+        pagerSlidingTabStrip.setOnTabClickListener(new PagerSlidingTabStrip.OnTabClickListener() {
+            @Override
+            public void onTabClick(int position) {
+                mViewPager.setCurrentItem(emoticonPagerAdapter.getEmoticonGroupList().get(position).getPageStart());
+            }
+        });
     }
 
     @Override

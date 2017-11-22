@@ -126,12 +126,36 @@ public class GridViewAdapter extends ArrayAdapter<EmoticonBean> {
             holder.imageView.setVisibility(View.VISIBLE);
             holder.editText.setVisibility(View.GONE);
         } else {
-            holder.imageView.setVisibility(View.GONE);
-            holder.editText.setVisibility(View.VISIBLE);
-            holder.editText.setText(mGridData.get(position).getEmoticon());
+
+            if (item != null) {
+                if (item.getIcon() == 0) {
+                    showEmoji(position, holder);
+                } else {
+                    showEmoticon(holder, item);
+                }
+            } else {
+                hideItem(holder);
+            }
         }
 
         return convertView;
+    }
+
+    private void hideItem(ViewHolder holder) {
+        holder.imageView.setVisibility(View.GONE);
+        holder.editText.setVisibility(View.GONE);
+    }
+
+    private void showEmoji(int position, ViewHolder holder) {
+        holder.imageView.setVisibility(View.GONE);
+        holder.editText.setVisibility(View.VISIBLE);
+        holder.editText.setText(mGridData.get(position).getEmoticon());
+    }
+
+    private void showEmoticon(ViewHolder holder, EmoticonBean item) {
+        holder.imageView.setVisibility(View.VISIBLE);
+        holder.editText.setVisibility(View.GONE);
+        holder.imageView.setImageResource(item.getIcon());
     }
 
     private boolean isDelButton(int position) {
