@@ -229,7 +229,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 				}
 
                 if (pager.getAdapter() instanceof EmoticonPagerAdapter) {
-                    currentPosition = getCurrentPosition(pager.getCurrentItem());
+                    currentPosition = ((EmoticonPagerAdapter)pager.getAdapter()).getCurrentPosition(pager.getCurrentItem());
                 } else {
                     currentPosition = pager.getCurrentItem();
                 }
@@ -264,10 +264,17 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 		tab.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-                if (mOnTabClickListener != null) {
-                    mOnTabClickListener.onTabClick(position);
+
+//                if (mOnTabClickListener != null) {
+//                    mOnTabClickListener.onTabClick(position);
+//                    return;
+//                }
+
+                if (pager.getAdapter() instanceof EmoticonPagerAdapter) {
+                    pager.setCurrentItem(((EmoticonPagerAdapter)pager.getAdapter()).getPageStart(position));
                     return;
                 }
+
                 pager.setCurrentItem(position);
 			}
 		});
@@ -308,7 +315,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 		}
 
         if (pager.getAdapter() instanceof EmoticonPagerAdapter) {
-            position = getCurrentPosition(position);
+            position = ((EmoticonPagerAdapter)pager.getAdapter()).getCurrentPosition(position);
         }
 
 		int newScrollX = tabsContainer.getChildAt(position).getLeft() + offset;
@@ -344,8 +351,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 		float lineRight = currentTab.getRight();
 
 		// if there is an offset, start interpolating left and right coordinates between current and next tab
-		if (currentPositionOffset > 0f && currentPosition < tabCount - 1
-                && !(pager.getAdapter() instanceof EmoticonPagerAdapter)) {
+		if (currentPositionOffset > 0f && currentPosition < tabCount - 1) {
 
 			View nextTab = tabsContainer.getChildAt(currentPosition + 1);
 			final float nextTabLeft = nextTab.getLeft();
@@ -371,25 +377,13 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 		}
 	}
 
-    public int getCurrentPosition(int position) {
-        int result = 0;
-        List<EmoticonListBean> emoticonGroupList = ((EmoticonPagerAdapter) pager.getAdapter()).getEmoticonGroupList();
-        for (int i = 0; i < emoticonGroupList.size(); i++) {
-            if (emoticonGroupList.get(i).getPageEnd() > position) {
-                result = i;
-                break;
-            }
-        }
-        return result;
-    }
-
 	private class PageListener implements OnPageChangeListener {
 
 		@Override
 		public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
             if (pager.getAdapter() instanceof EmoticonPagerAdapter) {
-                currentPosition = position = getCurrentPosition(position);
+                currentPosition = position = ((EmoticonPagerAdapter)pager.getAdapter()).getCurrentPosition(position);
             } else {
                 currentPosition = position;
             }
@@ -408,7 +402,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 		public void onPageScrollStateChanged(int state) {
 			if (state == ViewPager.SCROLL_STATE_IDLE) {
                 if (pager.getAdapter() instanceof EmoticonPagerAdapter) {
-                    scrollToChild(getCurrentPosition(pager.getCurrentItem()), 0);
+                    scrollToChild(((EmoticonPagerAdapter)pager.getAdapter()).getCurrentPosition(pager.getCurrentItem()), 0);
                 } else {
                     scrollToChild(pager.getCurrentItem(), 0);
                 }

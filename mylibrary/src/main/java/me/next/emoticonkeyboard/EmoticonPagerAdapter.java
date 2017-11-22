@@ -158,6 +158,22 @@ public class EmoticonPagerAdapter extends PagerAdapter implements PagerSlidingTa
         return mDelResId != EmoticonPageView.DEL_BUTTON_NONE;
     }
 
+    public int getPageStart(int position) {
+        return getEmoticonGroupList().get(position).getPageStart();
+    }
+
+    public int getCurrentPosition(int position) {
+        int result = 0;
+        List<EmoticonListBean> emoticonGroupList = getEmoticonGroupList();
+        for (int i = 0; i < emoticonGroupList.size(); i++) {
+            if (emoticonGroupList.get(i).getPageEnd() > position) {
+                result = i;
+                break;
+            }
+        }
+        return result;
+    }
+
     @Override
     public int getPageIconResId(int position) {
         if (mTabRes == null || mTabRes.length < mEmoticonGroupList.size()) {
