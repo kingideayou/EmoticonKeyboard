@@ -32,9 +32,11 @@ public class MainActivity extends AppCompatActivity {
 
         List<EmoticonBean> gridItemList1 = Arrays.asList(EmojiPeople.DATA);
         List<EmoticonBean> gridItemList2 = EmoticonSet.getTiebaEmoticon(getApplicationContext());
+        List<EmoticonBean> gridItemList3 = Arrays.asList(EmojiPeople.DATA);
 
         mEmotionList.add(gridItemList1);
         mEmotionList.add(gridItemList2);
+        mEmotionList.add(gridItemList3);
 
         editText = (EmoticonsEditText) findViewById(R.id.edit_text);
 
@@ -54,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         final EmoticonPagerAdapter emoticonPagerAdapter = new EmoticonPagerAdapter(
                 getApplicationContext(),
                 R.mipmap.ic_launcher_round,
-                emoticonBeanList, new int[]{R.mipmap.ic_launcher, R.mipmap.ic_launcher_round});
+                emoticonBeanList, new int[]{R.mipmap.ic_launcher, R.mipmap.ic_launcher_round, R.mipmap.ic_launcher});
 
         emoticonPagerAdapter.setOnEmoticonClickListener(new OnEmoticonClickListener() {
             @Override

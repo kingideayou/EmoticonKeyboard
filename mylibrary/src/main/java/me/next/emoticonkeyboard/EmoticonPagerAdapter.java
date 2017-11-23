@@ -165,6 +165,11 @@ public class EmoticonPagerAdapter extends PagerAdapter implements PagerSlidingTa
     public int getCurrentPosition(int position) {
         int result = 0;
         List<EmoticonListBean> emoticonGroupList = getEmoticonGroupList();
+
+        if (emoticonGroupList.size() > 0 && position > emoticonGroupList.get(emoticonGroupList.size() - 1).getPageEnd()) {
+            return emoticonGroupList.size();
+        }
+
         for (int i = 0; i < emoticonGroupList.size(); i++) {
             if (emoticonGroupList.get(i).getPageEnd() > position) {
                 result = i;

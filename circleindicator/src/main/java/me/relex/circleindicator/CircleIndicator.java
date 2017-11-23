@@ -11,7 +11,6 @@ import android.support.annotation.AnimatorRes;
 import android.support.annotation.DrawableRes;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.animation.Interpolator;
@@ -188,17 +187,16 @@ public class CircleIndicator extends LinearLayout {
             }
 
             if (mViewpager.getAdapter() instanceof EmoticonPagerAdapter) {
-                position = position - mEmoticonListBean.getPageStart();
-                if (mViewpager.getCurrentItem() >= mEmoticonListBean.getPageEnd()) {
-                    createIndicators();
-                    mLastPosition = 0;
-                    return;
-                } else if (mViewpager.getCurrentItem() < mEmoticonListBean.getPageStart()) {
-                    createIndicators();
-                    mLastPosition = mEmoticonListBean.getPageEnd() - 1;
-                    return;
+
+                EmoticonListBean currentEmoticonListBean = ((EmoticonPagerAdapter)mViewpager.getAdapter()).getEmoticonListBean(position);
+                if (mEmoticonListBean != currentEmoticonListBean) {
+                    mEmoticonListBean = currentEmoticonListBean;
+                    mLastPosition = -1;
                 }
+                position = position - mEmoticonListBean.getPageStart();
             }
+
+            createIndicators();
 
             if (mAnimatorIn.isRunning()) {
                 mAnimatorIn.end();
