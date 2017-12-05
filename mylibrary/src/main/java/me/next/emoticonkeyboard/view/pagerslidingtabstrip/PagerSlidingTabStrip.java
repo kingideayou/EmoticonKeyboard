@@ -196,7 +196,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 
 		tabsContainer.removeAllViews();
 
-        if (pager.getAdapter() instanceof EmoticonPagerAdapter) {
+        if (isEmotionView()) {
             List<EmoticonListBean> emoticonGroupList = ((EmoticonPagerAdapter) pager.getAdapter()).getEmoticonGroupList();
             tabCount = emoticonGroupList.size();
         } else {
@@ -228,7 +228,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 					getViewTreeObserver().removeOnGlobalLayoutListener(this);
 				}
 
-                if (pager.getAdapter() instanceof EmoticonPagerAdapter) {
+                if (isEmotionView()) {
                     currentPosition = ((EmoticonPagerAdapter)pager.getAdapter()).getCurrentPosition(pager.getCurrentItem());
                 } else {
                     currentPosition = pager.getCurrentItem();
@@ -270,8 +270,8 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 //                    return;
 //                }
 
-                if (pager.getAdapter() instanceof EmoticonPagerAdapter) {
-                    pager.setCurrentItem(((EmoticonPagerAdapter)pager.getAdapter()).getPageStart(position));
+                if (isEmotionView()) {
+                    pager.setCurrentItem(((EmoticonPagerAdapter)pager.getAdapter()).getPageStart(position), false);
                     return;
                 }
 
@@ -314,7 +314,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 			return;
 		}
 
-        if (pager.getAdapter() instanceof EmoticonPagerAdapter) {
+        if (isEmotionView()) {
             position = ((EmoticonPagerAdapter)pager.getAdapter()).getCurrentPosition(position);
         }
 
@@ -350,26 +350,22 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 		float lineLeft = currentTab.getLeft();
 		float lineRight = currentTab.getRight();
 
-		// if there is an offset, start interpolating left and right coordinates between current and next tab
-		if (currentPositionOffset > 0f && currentPosition < tabCount - 1) {
+        if (isEmotionView()) {
+            canvas.drawRect(lineLeft, height - indicatorHeight, lineRight, height, rectPaint);
+        } else {
+            // if there is an offset, start interpolating left and right coordinates between current and next tab
+            if (currentPositionOffset > 0f && currentPosition < tabCount - 1) {
 
-            View nextTab;
+                View nextTab = tabsContainer.getChildAt(currentPosition + 1);
+                final float nextTabLeft = nextTab.getLeft();
+                final float nextTabRight = nextTab.getRight();
 
-//            if (pager.getAdapter() instanceof EmoticonPagerAdapter) {
-//                int nextTabIndex = ((EmoticonPagerAdapter) pager.getAdapter()).getCurrentPosition(currentPosition + 1);
-//                nextTab = tabsContainer.getChildAt(nextTabIndex);
-//            } else {
-//                nextTab = tabsContainer.getChildAt(currentPosition + 1);
-//            }
-//
-//            final float nextTabLeft = nextTab.getLeft();
-//			final float nextTabRight = nextTab.getRight();
-//
-//			lineLeft = (currentPositionOffset * nextTabLeft + (1f - currentPositionOffset) * lineLeft);
-//			lineRight = (currentPositionOffset * nextTabRight + (1f - currentPositionOffset) * lineRight);
-		}
+                lineLeft = (currentPositionOffset * nextTabLeft + (1f - currentPositionOffset) * lineLeft);
+                lineRight = (currentPositionOffset * nextTabRight + (1f - currentPositionOffset) * lineRight);
+            }
+            canvas.drawRect(lineLeft, height - indicatorHeight, lineRight, height, rectPaint);
+        }
 
-		canvas.drawRect(lineLeft, height - indicatorHeight, lineRight, height, rectPaint);
 
 		// draw underline
 
@@ -389,8 +385,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 
 		@Override
 		public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            if (pager.getAdapter() instanceof EmoticonPagerAdapter) {
+            if (isEmotionView()) {
                 currentPosition = position = ((EmoticonPagerAdapter)pager.getAdapter()).getCurrentPosition(position);
             } else {
                 currentPosition = position;
@@ -408,9 +403,10 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 
 		@Override
 		public void onPageScrollStateChanged(int state) {
+
 			if (state == ViewPager.SCROLL_STATE_IDLE) {
-                if (pager.getAdapter() instanceof EmoticonPagerAdapter) {
-                    scrollToChild(((EmoticonPagerAdapter)pager.getAdapter()).getCurrentPosition(pager.getCurrentItem()), 0);
+                if (isEmotionView()) {
+                    return;
                 } else {
                     scrollToChild(pager.getCurrentItem(), 0);
                 }
@@ -430,7 +426,11 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 
 	}
 
-	public void setIndicatorColor(int indicatorColor) {
+    private boolean isEmotionView() {
+        return pager.getAdapter() instanceof EmoticonPagerAdapter;
+    }
+
+    public void setIndicatorColor(int indicatorColor) {
 		this.indicatorColor = indicatorColor;
 		invalidate();
 	}

@@ -20,12 +20,12 @@
         "source": "/Users/NeXT/.android/build-cache/e614a278a4118c393b68a1f72cb7a467df17cbe2/output/res/drawable-hdpi-v4/notification_bg_low_normal.9.png"
     },
     {
-        "merged": "/Users/NeXT/Projects/GitDemo/XhsEmoticonsKeyboard/EmojiSelectView/circleindicator/build/intermediates/res/merged/release/drawable-hdpi-v4/abc_ic_star_half_black_16dp.png",
-        "source": "/Users/NeXT/.android/build-cache/e614a278a4118c393b68a1f72cb7a467df17cbe2/output/res/drawable-hdpi-v4/abc_ic_star_half_black_16dp.png"
-    },
-    {
         "merged": "/Users/NeXT/Projects/GitDemo/XhsEmoticonsKeyboard/EmojiSelectView/circleindicator/build/intermediates/res/merged/release/drawable-hdpi-v4/abc_list_longpressed_holo.9.png",
         "source": "/Users/NeXT/.android/build-cache/e614a278a4118c393b68a1f72cb7a467df17cbe2/output/res/drawable-hdpi-v4/abc_list_longpressed_holo.9.png"
+    },
+    {
+        "merged": "/Users/NeXT/Projects/GitDemo/XhsEmoticonsKeyboard/EmojiSelectView/circleindicator/build/intermediates/res/merged/release/drawable-hdpi-v4/abc_ic_star_half_black_16dp.png",
+        "source": "/Users/NeXT/.android/build-cache/e614a278a4118c393b68a1f72cb7a467df17cbe2/output/res/drawable-hdpi-v4/abc_ic_star_half_black_16dp.png"
     },
     {
         "merged": "/Users/NeXT/Projects/GitDemo/XhsEmoticonsKeyboard/EmojiSelectView/circleindicator/build/intermediates/res/merged/release/drawable-hdpi-v4/abc_btn_check_to_on_mtrl_015.png",

@@ -4,12 +4,12 @@
         "source": "/Users/NeXT/.android/build-cache/e614a278a4118c393b68a1f72cb7a467df17cbe2/output/res/layout/notification_action.xml"
     },
     {
-        "merged": "/Users/NeXT/Projects/GitDemo/XhsEmoticonsKeyboard/EmojiSelectView/circleindicator/build/intermediates/res/merged/debug/layout/abc_alert_dialog_button_bar_material.xml",
-        "source": "/Users/NeXT/.android/build-cache/e614a278a4118c393b68a1f72cb7a467df17cbe2/output/res/layout/abc_alert_dialog_button_bar_material.xml"
-    },
-    {
         "merged": "/Users/NeXT/Projects/GitDemo/XhsEmoticonsKeyboard/EmojiSelectView/circleindicator/build/intermediates/res/merged/debug/layout/abc_action_menu_item_layout.xml",
         "source": "/Users/NeXT/.android/build-cache/e614a278a4118c393b68a1f72cb7a467df17cbe2/output/res/layout/abc_action_menu_item_layout.xml"
+    },
+    {
+        "merged": "/Users/NeXT/Projects/GitDemo/XhsEmoticonsKeyboard/EmojiSelectView/circleindicator/build/intermediates/res/merged/debug/layout/abc_alert_dialog_button_bar_material.xml",
+        "source": "/Users/NeXT/.android/build-cache/e614a278a4118c393b68a1f72cb7a467df17cbe2/output/res/layout/abc_alert_dialog_button_bar_material.xml"
     },
     {
         "merged": "/Users/NeXT/Projects/GitDemo/XhsEmoticonsKeyboard/EmojiSelectView/circleindicator/build/intermediates/res/merged/debug/layout/abc_action_bar_view_list_nav_layout.xml",
