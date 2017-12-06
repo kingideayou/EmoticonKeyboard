@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
         List<EmoticonBean> gridItemList1 = Arrays.asList(EmojiPeople.DATA);
         List<EmoticonBean> gridItemList2 = EmoticonSet.getTiebaEmoticon(getApplicationContext());
-        List<EmoticonBean> gridItemList3 = Arrays.asList(EmojiPeople.DATA);
+        List<EmoticonBean> gridItemList3 = EmoticonSet.getWeiboEmoticon(getApplicationContext());
 
         mEmotionList.add(gridItemList1);
         mEmotionList.add(gridItemList2);
@@ -40,11 +40,13 @@ public class MainActivity extends AppCompatActivity {
 
         editText = (EmoticonsEditText) findViewById(R.id.edit_text);
 
+        boolean showTabLayout = mEmotionList != null && mEmotionList.size() > 0;
+
         mDetector = EmoticonInputDetector.with(this)
                 .setEmotionView(findViewById(R.id.rl_emoticon))//表情选择视图
                 .bindToContent(findViewById(R.id.list))
                 .bindToEditText(editText)
-                .bindToTableLayout(findViewById(R.id.tabs), mEmotionList)
+                .bindToTableLayout(findViewById(R.id.tabs), showTabLayout)
                 .bindToEmotionButton(findViewById(R.id.emotion_button))//控制表情显示按钮
                 .build();
 

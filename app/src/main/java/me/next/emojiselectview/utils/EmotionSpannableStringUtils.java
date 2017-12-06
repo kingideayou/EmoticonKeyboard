@@ -9,7 +9,7 @@ import android.widget.EditText;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import me.next.emojiselectview.R;
+import me.next.emojiselectview.EmoticonSet;
 import me.next.emoticonkeyboard.CenterImageSpan;
 
 /**
@@ -32,12 +32,10 @@ public class EmotionSpannableStringUtils {
         Matcher m = getMatcher(text.toString().substring(start, text.toString().length()));
         while (m.find()) {
             String key = m.group();
-//            String icon = DefXhsEmoticonsns.sXhsEmoticonHashMap.get(key);
-            int icon = R.drawable.tieba_emotion_01;
-//            if (!TextUtils.isEmpty(icon)) {
-//                displayEmoticon(editText.getContext(), editText.getText(), icon, emoticonSize, start + m.start(), start + m.end());
+            int icon = EmoticonSet.getEmotionMap(editText.getContext()).get(key);
+            if (icon > 0) {
                 displayEmoticon(editText.getContext(), editText.getText(), icon, emoticonSize, start + m.start(), start + m.end());
-//            }
+            }
         }
     }
 
@@ -45,12 +43,10 @@ public class EmotionSpannableStringUtils {
         Matcher m = getMatcher(text);
         while (m.find()) {
             String key = m.group();
-//            String icon = DefXhsEmoticons.sXhsEmoticonHashMap.get(key);
-            int icon = R.drawable.tieba_emotion_01;
-//            if (!TextUtils.isEmpty(icon)) {
-//                displayEmoticon(context, spannable, icon, fontSize, m.start(), m.end());
+            int icon = EmoticonSet.getEmotionMap(context).get(key);
+            if (icon > 0) {
                 displayEmoticon(context, spannable, icon, fontSize, m.start(), m.end());
-//            }
+            }
         }
         return spannable;
     }

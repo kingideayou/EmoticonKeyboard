@@ -3,7 +3,9 @@ package me.next.emojiselectview;
 import android.content.Context;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import me.next.emoticonkeyboard.model.EmoticonBean;
 
@@ -13,9 +15,58 @@ import me.next.emoticonkeyboard.model.EmoticonBean;
 
 public class EmoticonSet {
 
-    public static List<EmoticonBean> getTiebaEmoticon(Context context) {
+    private static List<EmoticonBean> tiebaEmoticonList;
+    private static List<EmoticonBean> weiboEmoticonList;
+    private static Map<String, Integer> emoticonMap = new HashMap<>();
 
-        List<EmoticonBean> tiebaEmoticonList = new ArrayList<>();
+    public static Map<String, Integer> getEmotionMap(Context context) {
+        if (emoticonMap != null) {
+            return emoticonMap;
+        }
+        emoticonMap = new HashMap<>();
+        for (EmoticonBean emoticonBean : getTiebaEmoticon(context)) {
+            emoticonMap.put(emoticonBean.getEmoticon(), emoticonBean.getIcon());
+        }
+        return emoticonMap;
+    }
+
+    static List<EmoticonBean> getWeiboEmoticon(Context context) {
+
+        if (weiboEmoticonList != null) {
+            return weiboEmoticonList;
+        }
+        weiboEmoticonList = new ArrayList<>();
+
+        Integer[] numArr = new Integer[]{
+                Integer.valueOf(R.drawable.weibo_erha),
+                Integer.valueOf(R.drawable.weibo_miao),
+                Integer.valueOf(R.drawable.weibo_dog),
+                Integer.valueOf(R.drawable.weibo_dog1)};
+
+        String[] stringArray = context.getResources().getStringArray(R.array.weibo_emotion_array);
+
+        if (numArr.length == stringArray.length) {
+            String key;
+            int drawable;
+            for (int i = 0; i < numArr.length; i++) {
+                key = stringArray[i];
+                drawable = numArr[i];
+                weiboEmoticonList.add(new EmoticonBean(drawable, ' ', key));
+                if (!emoticonMap.containsKey(key)) {
+                    emoticonMap.put(key, drawable);
+                }
+            }
+        }
+
+        return weiboEmoticonList;
+    }
+
+    static List<EmoticonBean> getTiebaEmoticon(Context context) {
+
+        if (tiebaEmoticonList != null) {
+            return tiebaEmoticonList;
+        }
+        tiebaEmoticonList = new ArrayList<>();
 
         Integer[] numArr = new Integer[]{
                 Integer.valueOf(R.drawable.tieba_emotion_01),
@@ -88,20 +139,22 @@ public class EmoticonSet {
                 Integer.valueOf(R.drawable.tieba_emotion_69),
                 Integer.valueOf(R.drawable.tieba_emotion_70)};
 
-        String[] stringArray = context.getResources().getStringArray(R.array.tieba_emotion_array_1);
+        String[] stringArray = context.getResources().getStringArray(R.array.tieba_emotion_array);
 
         if (numArr.length == stringArray.length) {
+            String key;
+            int drawable;
             for (int i = 0; i < numArr.length; i++) {
-                tiebaEmoticonList.add(new EmoticonBean(numArr[i], ' ', stringArray[i]));
+                key = stringArray[i];
+                drawable = numArr[i];
+                tiebaEmoticonList.add(new EmoticonBean(drawable, ' ', key));
+                if (!emoticonMap.containsKey(key)) {
+                    emoticonMap.put(key, drawable);
+                }
             }
         }
 
         return tiebaEmoticonList;
-
-//        Map<String, Integer> tiebaEmoticonMap = new HashMap<>();
-//        stringBuilder.append(((a) arrayList.get(arrayList.size() - 1)).c());
-//        stringBuilder.append(")\\)");
-//        Pattern.compile(stringBuilder.toString()), "<img src=\"$0\"/>", arrayList);
     }
 }
 

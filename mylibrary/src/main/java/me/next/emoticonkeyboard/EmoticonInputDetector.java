@@ -16,10 +16,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-import java.util.List;
-
-import me.next.emoticonkeyboard.model.EmoticonBean;
-
 /**
  * Created by dss886 on 15/9/26.
  */
@@ -50,8 +46,8 @@ public class EmoticonInputDetector {
         return this;
     }
 
-    public EmoticonInputDetector bindToTableLayout(View tableLayout, List<List<EmoticonBean>> emotionList) {
-        if (emotionList == null || emotionList.size() <= 1) {
+    public EmoticonInputDetector bindToTableLayout(View tableLayout, boolean showTabLayout) {
+        if (!showTabLayout) {
             RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) tableLayout.getLayoutParams();
             params.height = 0;
             tableLayout.setLayoutParams(params);
